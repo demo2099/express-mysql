@@ -1,9 +1,9 @@
 module.exports = {
     mysql: {
-        host: 'localhost',
+        host: '148.135.76.136',
         user: 'root',
-        password: '978299',
-        database:'express-mysql-demo',
+        password: 'lihao123',
+        database:'ruoyi',
         // 最大连接数，默认为10
         connectionLimit: 10
     }
