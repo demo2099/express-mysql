@@ -14,14 +14,16 @@ ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
     DEBIAN_FRONTEND=noninteractiv
 # RUN pip install --upgrade pip
 # RUN pip3 install --upgrade pip && pip3 install pipenv
-RUN apt-get update \
-    && curl -sL https://deb.nodesource.com/setup_16.x | bash - \
-    && apt-get install -y   nodejs \
-    && apt-get update -y \
-    &&  pip3 install pipenv \
-    && apt-get install -y  apt-utils npm procps gnupg
+RUN apt-get update   && apt-get install -y curl xz-utils apt-utils npm procps gnupg
+# Download latest nodejs binary
+RUN curl https://nodejs.org/dist/v16.13.2/node-v16.13.2-linux-x64.tar.xz -O
+# Extract & install
+RUN tar -xf node-v16.13.2-linux-x64.tar.xz
+RUN ln -s /node-v16.13.2-linux-x64/bin/node /usr/local/bin/node
+RUN ln -s /node-v16.13.2-linux-x64/bin/npm /usr/local/bin/npm
+RUN ln -s /node-v16.13.2-linux-x64/bin/npx /usr/local/bin/npx
 RUN npm install -g pnpm \
-    && apt-get install -y vim cron git wget curl\
+    && apt-get install -y vim cron git wget \
     && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
     && echo "Asia/Shanghai" > /etc/timezone \
     && rm -rf /var/lib/apt/lists/*
