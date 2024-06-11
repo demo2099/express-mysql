@@ -55,15 +55,17 @@ async function fetchWeb(request) {
     const host = request.headers.host;
     console.log("url:" + url);
     const token = request.query['token'];
-    mytoken = 'dkuucIduUEN8tnv6';
+    mytoken = request._parsedUrl['pathname'];
     BotToken = env.TGTOKEN || BotToken;
     ChatID = env.TGID || ChatID;
     TG = env.TG || TG;
     subconverter = env.SUBAPI || subconverter;
     subconfig = env.SUBCONFIG || subconfig;
     FileName = env.SUBNAME || FileName;
-    if (request.originalUrl.includes('link')) {
+    if (!request.originalUrl.includes('token')) {
         MainData = MainData + 'http://789258.xyz' + request.originalUrl;
+    }else {
+        MainData = MainData + 'http://789258.xyz/link' + request._parsedUrl['pathname']+'?sub=3';
     }
     console.log(MainData);
     //MainData = env.LINK || MainData;
@@ -119,8 +121,8 @@ async function fetchWeb(request) {
         }
 
         let subconverterUrl;
-        let 订阅转换URL = `${host}/link/${fakeToken}?token=${fakeToken}`;
-        console.log(订阅转换URL);
+        let 订阅转换URL = `${host}/link${mytoken}?token=${fakeToken}`;
+        console.log("订阅转换URL:"+订阅转换URL);
         let req_data = MainData;
         // 创建一个AbortController对象，用于控制fetch请求的取消
         const controller = new AbortController();
