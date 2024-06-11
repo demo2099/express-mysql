@@ -38,6 +38,8 @@ let timestamp = 4102329600000;//2099-12-31
 
 //节点链接 + 订阅链接
 let MainData = `
+http://789258.xyz/link/dkuucIduUEN8tnv6?sub=3
+trojan://402d7490-6d4b-42d4-80ed-e681b0e6f1f9@cwork.678567.xyz:443?security=tls&type=ws&host=cwork.678567.xyz&path=%2F#USC
 trojan://402d7490-6d4b-42d4-80ed-e681b0e6f1f9@cwork.678567.xyz:443?security=tls&type=ws&host=cwork.678567.xyz&path=%2F#USC
 vless://402d7490-6d4b-42d4-80ed-e681b0e6f1f7@jp99.987443.xyz:443?encryption=none&security=tls&sni=jp99.987443.xyz&fp=randomized&type=ws&host=jp99.987443.xyz&path=%2F%3Fed%3D2048#USCC
 `
@@ -139,6 +141,8 @@ async function fetchWeb(request) {
             追加UA = 'singbox';
         }
         console.log("urls:" + urls);
+        urls = Array.from(new Set(urls));
+        console.log("去重"+urls); // [1, 2, 3, 4, 5]
         try {
             const responses = await Promise.allSettled(urls.map(url =>
                 fetch(url, {
