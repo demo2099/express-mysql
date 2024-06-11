@@ -202,7 +202,10 @@ async function fetchWeb(request) {
         } else if (订阅格式 == 'singbox') {
             subconverterUrl = `https://${subconverter}/sub?target=singbox&url=${encodeURIComponent(订阅转换URL)}&insert=false&config=${encodeURIComponent(subconfig)}&emoji=true&list=false&tfo=false&scv=true&fdn=false&sort=false&new_name=true`;
         }
-        console.log(订阅转换URL);
+        console.log("订阅格式:"+订阅格式);
+        console.log("订阅转换URL:"+订阅转换URL);
+        console.log("subconverterUrl:"+subconverterUrl);
+
         try {
             const subconverterResponse = await fetch(subconverterUrl);
 
@@ -211,6 +214,7 @@ async function fetchWeb(request) {
                 //throw new Error(`Error fetching subconverterUrl: ${subconverterResponse.status} ${subconverterResponse.statusText}`);
             }
             let subconverterContent = await subconverterResponse.text();
+            console.log("subconverterContent:::"+subconverterContent)
             if (订阅格式 == 'clash') subconverterContent = await clashFix(subconverterContent);
             return subconverterContent;
         } catch (error) {
