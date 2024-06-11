@@ -121,7 +121,7 @@ async function fetchWeb(request) {
         }
 
         let subconverterUrl;
-        let 订阅转换URL = `${host}/link${mytoken}?token=${fakeToken}`;
+        let 订阅转换URL = `http://www.demobbs.top/link${mytoken}?token=${fakeToken}`;
         console.log("订阅转换URL:"+订阅转换URL);
         let req_data = MainData;
         // 创建一个AbortController对象，用于控制fetch请求的取消
