@@ -195,7 +195,7 @@ async function fetchWeb(request) {
         //去重
         const uniqueLines = new Set(text.split('\n'));
         const result = [...uniqueLines].join('\n');
-        console.log("result:" + result);
+        console.log("result去重:" + result);
 
         const base64Data = btoa(result);
 
