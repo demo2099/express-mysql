@@ -44,12 +44,13 @@ trojan://402d7490-6d4b-42d4-80ed-e681b0e6f1f9@cwork.678567.xyz:443?security=tls&
 vless://402d7490-6d4b-42d4-80ed-e681b0e6f1f7@jp99.987443.xyz:443?encryption=none&security=tls&sni=jp99.987443.xyz&fp=randomized&type=ws&host=jp99.987443.xyz&path=%2F%3Fed%3D2048#USCC
 `
 
-let urls = [];
+
 let subconverter = "8.210.84.173:25500"; //在线订阅转换后端，目前使用肥羊的订阅转换功能。支持自建psub 可自行搭建https://github.com/bulianglin/psub
 let subconfig = "https://raw.githubusercontent.com/cmliu/ACL4SSR/main/Clash/config/ACL4SSR_Online_MultiCountry.ini"; //订阅配置文件
 
 
 async function fetchWeb(request) {
+    let urls = [];
     env = {}
     const userAgentHeader = request.headers['user-agent'];
     const userAgent = userAgentHeader ? userAgentHeader.toLowerCase() : "null";
