@@ -125,7 +125,7 @@ async function fetchWeb(request) {
         let subconverterUrl;
         let 订阅转换URL = `http://${host}/link${mytoken}?token=${fakeToken}`;
         console.log("订阅转换URL:"+订阅转换URL);
-        let req_data = MainData;
+        let req_data ='';
         // 创建一个AbortController对象，用于控制fetch请求的取消
         const controller = new AbortController();
 
@@ -186,7 +186,11 @@ async function fetchWeb(request) {
             // 无论成功或失败，最后都清除设置的超时定时器
             clearTimeout(timeout);
         }
-
+        if(isEmpty(req_data)){
+            console.log("没有数据直接退出！")
+            return '';
+        }
+        req_data = MainData+req_data;
         //修复中文错误
         const utf8Encoder = new TextEncoder();
         const encodedData = utf8Encoder.encode(req_data);
@@ -226,7 +230,12 @@ async function fetchWeb(request) {
         }
     }
 }
-
+function isEmpty(value) {
+    return !value ||
+        (typeof value === 'string' && value.trim() === '') ||
+        (Array.isArray(value) && value.length === 0) ||
+        (typeof value === 'object' && Object.keys(value).length === 0);
+}
 async function ADD(envadd) {
     var addtext = envadd.replace(/[	"'|\r\n]+/g, ',').replace(/,+/g, ',');  // 将空格、双引号、单引号和换行符替换为逗号
     //console.log(addtext);
