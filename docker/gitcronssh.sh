@@ -74,3 +74,4 @@ cd
 ssh -T git@github.com
 ssh -T git@gitee.com
 echo "初始化git秘钥成功"
+git config --global core.filemode false
