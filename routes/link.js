@@ -3,21 +3,20 @@ var router = express.Router();
 var result = require('../model/result');
 const crypto = require("crypto");
 const fetch = require('node-fetch');
-
+let userinfoStorage = {};
+let userURL='';
 /* get user */
 router.get('*', function(req, res) {
     console.log('get user called, id: lihaoxx' );
 
-    async function fetchData() {
-        const response = await fetch('https://api.example.com/data');
-        const data = await response.json();
-        return data; // 返回获取到的数据
-    }
-
 // 调用async函数并处理返回的数据
-    fetchWeb(req).then(returnedData => {
+    fetchWeb(req,res).then(returnedData => {
         console.log(returnedData); // 输出获取到的数据
-        res.send(returnedData)
+        //res.send(returnedData)
+        // 正确使用 res 对象
+        res.setHeader('Content-Type', 'text/plain');
+        res.setHeader('subscription-userinfo', userinfoStorage[userURL]);
+        res.end(returnedData);
     }).catch(error => {
         console.error('Error fetching data:', error);
     });
@@ -48,7 +47,7 @@ let subconverter = "8.210.84.173:25500"; //在线订阅转换后端，目前使�
 let subconfig = "https://raw.githubusercontent.com/cmliu/ACL4SSR/main/Clash/config/ACL4SSR_Online_MultiCountry.ini"; //订阅配置文件
 
 
-async function fetchWeb(request) {
+async function fetchWeb(request,res) {
     let urls = [];
     env = {}
     const userAgentHeader = request.headers['user-agent'];
@@ -56,6 +55,7 @@ async function fetchWeb(request) {
     const url = request.headers.host + request.originalUrl;
     const host = request.headers.host;
     console.log("url:" + url);
+    userURL = request.originalUrl.split('/')[2].split("?")[0];
     const token = request.query['token'];
     mytoken = request._parsedUrl['pathname'];
     BotToken = env.TGTOKEN || BotToken;
@@ -64,6 +64,7 @@ async function fetchWeb(request) {
     subconverter = env.SUBAPI || subconverter;
     subconfig = env.SUBCONFIG || subconfig;
     FileName = env.SUBNAME || FileName;
+    subscriptionuserinfo = '';
     if (!request.originalUrl.includes('token')) {
         MainData = MainData + 'http://789258.xyz' + request.originalUrl;
     }else {
@@ -150,6 +151,9 @@ async function fetchWeb(request) {
                 }).then(response => {
                     console.log("response:" + response.toString());
                     if (response.ok) {
+                        subscriptionuserinfo = response.headers.get('subscription-userinfo');
+                        userURL = url.split('/')[4].split('?')[0];
+                        userinfoStorage[userURL]=subscriptionuserinfo;
                         return response.text().then(content => {
                             console.log("得到输出------" + content);
                             // 这里可以顺便做内容检查
@@ -190,7 +194,7 @@ async function fetchWeb(request) {
             console.log("没有数据直接退出！")
             return '';
         }
-        req_data = MainData+req_data;
+        req_data = req_data+MainData;
         //修复中文错误
         const utf8Encoder = new TextEncoder();
         const encodedData = utf8Encoder.encode(req_data);
@@ -202,7 +206,7 @@ async function fetchWeb(request) {
         console.log("result去重:" + result);
 
         const base64Data = btoa(result);
-
+        订阅转换URL=订阅转换URL;
         if (订阅格式 == 'base64' || token == fakeToken) {
             return base64Data;
         } else if (订阅格式 == 'clash') {
