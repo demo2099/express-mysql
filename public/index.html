@@ -44,12 +44,14 @@
         <th>ID</th>
         <th>username</th>
         <th>password</th>
+        <th>node</th>
         <th>manage</th>
     </tr>
     <tr ng-repeat="user in users">
         <td>{{user.id}}</td>
         <td><a href="/detail.html?id={{user.id}}">{{user.username}}</a></td>
         <td><input ng-value="user.password" id="pwd{{user.id}}" ng-blur="doPatch(user.id)"/></td>
+        <td><input ng-value="user.node" id="pwd{{user.node}}" ng-blur="doPatch(user.id)"/></td>
         <td><a href="/modify.html?id={{user.id}}">modify</a> <a href="javascript:void(0)" ng-click="doDel(user)">DEL</a>
         </td>
     </tr>

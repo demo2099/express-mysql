@@ -16,13 +16,15 @@
                         var user = response.data.data;
                         $scope.username = user.username;
                         $scope.password = user.password;
+                        $scope.node = user.node;
                     }, function (err) {
                         alert(err);
                     });
                     $scope.doModify = function () {
                         var data = JSON.stringify({
                             username: $scope.username,
-                            password: $scope.password
+                            password: $scope.password,
+                            node: $scope.node
                         });
                         $http.put("/users/" + id, data)
                             .then(function (res) {
@@ -47,6 +49,10 @@
     <tr>
         <td><label for="password">password:</label></td>
         <td><input type="password" id="password" ng-model="password"/></td>
+    </tr>
+    <tr>
+        <td><label for="node">node:</label></td>
+        <td><input type="node" id="node" ng-model="node"/></td>
     </tr>
     <tr>
         <td colspan="2" align="center"><input type="button" value="modify" ng-click="doModify()"/></td>
