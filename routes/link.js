@@ -1,26 +1,31 @@
 var express = require('express');
 var router = express.Router();
+var userDAO = require('../dao/userDAO');
 var result = require('../model/result');
 const crypto = require("crypto");
 const fetch = require('node-fetch');
 let userinfoStorage = {};
 let userURL='';
+MainData='';
 /* get user */
 router.get('*', function(req, res) {
     console.log('get user called, id: lihaoxx' );
-
-// 调用async函数并处理返回的数据
-    fetchWeb(req,res).then(returnedData => {
-        console.log(returnedData); // 输出获取到的数据
-        //res.send(returnedData)
-        // 正确使用 res 对象
-        res.setHeader('Content-Type', 'text/plain');
-        res.setHeader('subscription-userinfo', userinfoStorage[userURL]);
-        res.end(returnedData);
-    }).catch(error => {
-        console.error('Error fetching data:', error);
+    userDAO.getByUsername('available2099', function (users) {
+        for (let user of users) {
+            MainData = MainData+user.node+'\n';
+        }
+    // 调用async函数并处理返回的数据
+        fetchWeb(req,res).then(returnedData => {
+            console.log(returnedData); // 输出获取到的数据
+            //res.send(returnedData)
+            // 正确使用 res 对象
+            res.setHeader('Content-Type', 'text/plain');
+            res.setHeader('subscription-userinfo', userinfoStorage[userURL]);
+            res.end(returnedData);
+        }).catch(error => {
+            console.error('Error fetching data:', error);
+        });
     });
-
 
 });
 
@@ -36,7 +41,7 @@ let total = 99;//PB
 let timestamp = 4102329600000;//2099-12-31
 
 //节点链接 + 订阅链接
-let MainData = `
+let MainDatax = `
 trojan://402d7490-6d4b-42d4-80ed-e681b0e6f1f9@cwork.678567.xyz:443?security=tls&type=ws&host=cwork.678567.xyz&path=%2F#USC
 trojan://402d7490-6d4b-42d4-80ed-e681b0e6f1f9@cwork.678567.xyz:443?security=tls&type=ws&host=cwork.678567.xyz&path=%2F#USC
 vless://402d7490-6d4b-42d4-80ed-e681b0e6f1f7@jp99.987443.xyz:443?encryption=none&security=tls&sni=jp99.987443.xyz&fp=randomized&type=ws&host=jp99.987443.xyz&path=%2F%3Fed%3D2048#USCC
