@@ -71,9 +71,9 @@ async function fetchWeb(request,res) {
     FileName = env.SUBNAME || FileName;
     subscriptionuserinfo = '';
     if (!request.originalUrl.includes('token')) {
-        MainData = MainData + 'https://v.789258.xyz' + request.originalUrl;
+        MainData = MainData + 'http://148.135.76.136:90' + request.originalUrl;
     }else {
-        MainData = MainData + 'https://v.789258.xyz/link' + request._parsedUrl['pathname']+'?sub=3';
+        MainData = MainData + 'http://148.135.76.136:90/link' + request._parsedUrl['pathname']+'?sub=3';
     }
     console.log(MainData);
     //MainData = env.LINK || MainData;
